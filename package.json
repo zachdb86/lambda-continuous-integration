@@ -1,0 +1,24 @@
+{
+  "name": "lambda-continuous-integration",
+  "version": "0.0.1",
+  "description": "Continuous Delivery into Lambda POC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachdb86/lambda-continuous-integration.git"
+  },
+  "author": "Zach Bresnick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zachdb86/lambda-continuous-integration/issues"
+  },
+  "homepage": "https://github.com/zachdb86/lambda-continuous-integration#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-awslambda": "^0.4.0",
+    "gulp-zip": "^3.2.0"
+  }
+}
