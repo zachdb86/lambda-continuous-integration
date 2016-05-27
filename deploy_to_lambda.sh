@@ -1,20 +1,26 @@
 pip install awscli
 
-echo "hello world"
+function=continuousIntegrationTest
+
 
 # Preparing and deploying Function to Lambda
 zip -r LambdaTest.zip index.js
-aws lambda update-function-code --function-name continuousIntegrationTest --zip-file fileb://LambdaTest.zip
+aws lambda update-function-code --function-name $function --zip-file fileb://LambdaTest.zip
 
 # Publishing a new Version of the Lambda function
-version=`aws lambda publish-version --function-name continuousIntegrationTest | jq -r .Version`
+version=`aws lambda publish-version --function-name $function | jq -r .Version`
 
 # Updating the PROD Lambda Alias so it points to the new function
-aws lambda update-alias --function-name continuousIntegrationTest --function-version $version --name PROD
+aws lambda update-alias --function-name $function --function-version $version --name PROD
 
-aws lambda get-function --function-name “continuousIntegrationTest”
+aws lambda get-function --function-name $function
 
 # Invoking Lambda function from update PROD alias
-aws lambda invoke --function-name continuousIntegrationTest --payload "$(cat data.json)" --qualifier PROD lambda_output.txt
+aws lambda invoke --function-name $function --payload "$(cat data.json)" --qualifier PROD lambda_output.txt
 
 cat lambda_output.txt
+
+aws lambda list-versions-by-function --function-name $function
+# Remove old versions of Lambda functions
+
+# aws lambda delete-function --function-name $function --qualifier
