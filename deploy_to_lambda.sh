@@ -2,7 +2,6 @@ pip install awscli
 
 function=continuousIntegrationTest
 
-
 # Preparing and deploying Function to Lambda
 zip -r LambdaTest.zip index.js
 aws lambda update-function-code --function-name $function --zip-file fileb://LambdaTest.zip
@@ -20,7 +19,12 @@ aws lambda invoke --function-name $function --payload "$(cat data.json)" --quali
 
 cat lambda_output.txt
 
-aws lambda list-versions-by-function --function-name $function
-# Remove old versions of Lambda functions
+# Removeing old versions of the Lambda function
+versions=(`aws lambda list-versions-by-function --function-name $function | jq -r .Versions[].Version`)
 
-# aws lambda delete-function --function-name $function --qualifier
+for v in "${versions[@]}"; do
+  if [ $v != "\$LATEST" ]; then
+    echo $v
+    # aws lambda delete-function --function-name $function --qualifier $v
+  fi
+done
