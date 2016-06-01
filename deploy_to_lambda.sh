@@ -24,7 +24,6 @@ versions=(`aws lambda list-versions-by-function --function-name $function | jq -
 
 for v in "${versions[@]}"; do
   if [ $v != "\$LATEST" ]; then
-    echo $v
-    # aws lambda delete-function --function-name $function --qualifier $v
+    aws lambda delete-function --function-name $function --qualifier $v
   fi
 done
