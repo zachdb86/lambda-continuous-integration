@@ -15,7 +15,7 @@ aws lambda update-alias --function-name $function --function-version $version --
 aws lambda get-function --function-name $function
 
 # Invoking Lambda function from update PROD alias
-aws lambda invoke --function-name $function --payload "$(cat data.json)" --qualifier PROD lambda_output.txt
+aws lambda invoke --function-name $function --payload $(cat data.json) --qualifier PROD lambda_output.txt
 
 cat lambda_output.txt
 
